@@ -202,7 +202,14 @@ module Fluent
             end
             c = @process_credentials
             process = c.process
-            options[:credentials] = Aws::ProcessCredentials.new(process)
+            # Suppress insecure string warning from newer aws-sdk-core.
+            # Using array form would break older versions that use Open3.popen3.
+            options[:credentials] = begin
+              verbose, $VERBOSE = $VERBOSE, nil
+              Aws::ProcessCredentials.new(process)
+            ensure
+              $VERBOSE = verbose
+            end
           else
             # Use default credentials
             # See http://docs.aws.amazon.com/sdkforruby/api/Aws/S3/Client.html
