@@ -212,7 +212,7 @@ module Fluent
             end
           else
             # Use default credentials
-            # See http://docs.aws.amazon.com/sdkforruby/api/Aws/S3/Client.html
+            # See https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Client.html
           end
           options
         end

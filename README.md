@@ -30,7 +30,7 @@ If you would like to build by yourself and install, you can build and install as
     $ bundle exec rake build
     $ bundle exec rake install
 
-If using td-agent v4 or lower, use td-agent-gem:
+If using td-agent v4 or lower (EOL), use td-agent-gem:
 
     $ td-agent-gem install fluent-plugin-kinesis
 
@@ -176,7 +176,7 @@ The following parameters are `kinesis_firehose` specific configurations.
 
 Name of the delivery stream to put data.
 
-As of Fluentd v1, placerholders are supported. For more details, see [stream_name for kinesis_streams plugin](#stream_name) and [Placeholders in Config: Buffer Section][fluentd-buffer-section-placeholders].
+As of Fluentd v1, placeholders are supported. For more details, see [stream_name for kinesis_streams plugin](#stream_name) and [Placeholders in Config: Buffer Section][fluentd-buffer-section-placeholders].
 
 #### append_new_line
 
@@ -195,7 +195,7 @@ The following parameters are `kinesis_streams_aggregated` specific configuration
 
 Name of the stream to put data.
 
-As of Fluentd v1, placerholders are supported. For more details, see [stream_name for kinesis_streams plugin](#stream_name) and [Placeholders in Config: Buffer Section][fluentd-buffer-section-placeholders].
+As of Fluentd v1, placeholders are supported. For more details, see [stream_name for kinesis_streams plugin](#stream_name) and [Placeholders in Config: Buffer Section][fluentd-buffer-section-placeholders].
 
 #### fixed_partition_key
 
@@ -244,8 +244,8 @@ See also:
 
 *   [Using IAM Roles - AWS Identity and Access
     Management](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use.html)
-*   [Aws::STS::Client](https://docs.aws.amazon.com/sdkforruby/api/Aws/STS/Client.html)
-*   [Aws::AssumeRoleCredentials](https://docs.aws.amazon.com/sdkforruby/api/Aws/AssumeRoleCredentials.html)
+*   [Aws::STS::Client](https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/STS/Client.html)
+*   [Aws::AssumeRoleCredentials](https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/AssumeRoleCredentials.html)
 
 #### role_arn (required)
 
@@ -295,9 +295,9 @@ Similar to the assume_role_credentials, but for usage in EKS.
 
 See also:
 
-*   [Using IAM Roles - AWS Identity and Access Management](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use.html)
+*   [Using IAM Roles - AWS Identity and Access Management](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use.html)
 *   [IAM Roles For Service Accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts-technical-overview.html)
-*   [Aws::STS::Client](http://docs.aws.amazon.com/sdkforruby/api/Aws/STS/Client.html)
+*   [Aws::STS::Client](https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/STS/Client.html)
 *   [Aws::AssumeRoleWebIdentityCredentials](https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/AssumeRoleWebIdentityCredentials.html)
 
 #### role_arn (required)
@@ -335,7 +335,7 @@ Retrieve temporary security credentials via HTTP request. This is useful on EC2 
 
 See also:
 
-*   [Aws::InstanceProfileCredentials](https://docs.aws.amazon.com/sdkforruby/api/Aws/InstanceProfileCredentials.html)
+*   [Aws::InstanceProfileCredentials](https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/InstanceProfileCredentials.html)
 *   [Temporary Security Credentials - AWS Identity and Access
     Management](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp.html)
 *   [Instance Metadata and User Data - Amazon Elastic Compute
@@ -376,7 +376,7 @@ This loads AWS access credentials from local ini file. This is useful for local 
 
 See also:
 
-*   [Aws::SharedCredentials](https://docs.aws.amazon.com/sdkforruby/api/Aws/SharedCredentials.html)
+*   [Aws::SharedCredentials](https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SharedCredentials.html)
 
 #### path
 
@@ -510,7 +510,7 @@ If your record contains a field whose string should be sent to Amazon Kinesis di
 
 #### compression
 
-Specifying compression way for data of each record. Current accepted options are `zlib` and `gzip`. Otherwise, no compression will be preformed.
+Specifying compression way for data of each record. Current accepted options are `zlib` and `gzip`. Otherwise, no compression will be performed.
 
 #### log_truncate_max_size
 
@@ -545,11 +545,11 @@ Boolean. Default `nil`. If `true`, the plugin uses FIPS-compliant endpoints for 
 
 #### ssl_verify_peer
 
-Boolean. Disable if you want to verify ssl connection, for testing. Default `true`.
+Boolean. Set to `false` to disable SSL certificate verification, for testing. Default `true`.
 
 #### debug
 
-Boolean. Enable if you need to debug Amazon Data Firehose API call. Default is `false`.
+Boolean. Enable if you need to debug API calls. Default is `false`.
 
 ## Development
 
@@ -562,7 +562,7 @@ To launch `fluentd` process with this plugin for development, follow the steps b
 
 To launch using specified version of Fluentd, use `BUNDLE_GEMFILE` environment variable:
 
-    BUNDLE_GEMFILE=$PWD/gemfiles/Gemfile.td-agent-3.3.0 bundle exec fluentd -c /path/to/fluent.conf
+    BUNDLE_GEMFILE=$PWD/gemfiles/Gemfile.fluent-package-5.0.9 bundle exec fluentd -c /path/to/fluent.conf
 
 ## Contributing
 
@@ -570,8 +570,8 @@ Bug reports and pull requests are welcome on [GitHub][github].
 
 ## Related Resources
 
-* [Amazon Kinesis Data Streams Developer Guide](http://docs.aws.amazon.com/kinesis/latest/dev/introduction.html)
-* [Amazon Data Firehose Developer Guide](http://docs.aws.amazon.com/firehose/latest/dev/what-is-this-service.html)
+* [Amazon Kinesis Data Streams Developer Guide](https://docs.aws.amazon.com/kinesis/latest/dev/introduction.html)
+* [Amazon Data Firehose Developer Guide](https://docs.aws.amazon.com/firehose/latest/dev/what-is-this-service.html)
 
 [github]: https://github.com/awslabs/aws-fluent-plugin-kinesis
 [fluentd-doc-kinesis]: https://docs.fluentd.org/how-to-guides/kinesis-stream
