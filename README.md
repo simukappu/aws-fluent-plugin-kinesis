@@ -183,6 +183,10 @@ As of Fluentd v1, placerholders are supported. For more details, see [stream_nam
 Boolean. Default `true`. If it is enabled, the plugin adds new line character (`\n`) to each serialized record.  
 Before appending `\n`, plugin calls chomp and removes separator from the end of each record as [chomp_record](#chomp_record) is `true`. Therefore, you don't need to enable [chomp_record](#chomp_record) option when you use [kinesis_firehose](#kinesis_firehose) output with default configuration ([append_new_line](#append_new_line) is `true`). If you want to set [append_new_line](#append_new_line) `false`, you can choose [chomp_record](#chomp_record) `false` (default) or `true` (compatible format with plugin v2).
 
+#### aggregated_record_size
+
+Integer. Default `0` (no aggregation). When set to a value greater than 0, the plugin concatenates multiple small records into a single larger record up to the specified size (in bytes) before sending to Firehose via PutRecordBatch. This can reduce costs when using Direct PUT ingestion, which applies a 5 KB per-record billing roundup. The value cannot exceed [max_record_size](#max_record_size) (default 1 MB). This is similar to the `aggregatedRecordSizeBytes` configuration in [Kinesis Agent](https://docs.aws.amazon.com/firehose/latest/dev/agent-config-settings.html).
+
 ### Configuration: kinesis_streams_aggregated
 
 The following parameters are `kinesis_streams_aggregated` specific configurations.

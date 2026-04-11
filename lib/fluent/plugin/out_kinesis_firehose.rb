@@ -26,6 +26,7 @@ module Fluent
 
       config_param :delivery_stream_name, :string
       config_param :append_new_line,      :bool, default: true
+      config_param :aggregated_record_size, :integer, default: 0
 
       def configure(conf)
         super
@@ -34,6 +35,9 @@ module Fluent
           @data_formatter = ->(tag, time, record) {
             org_data_formatter.call(tag, time, record).chomp + "\n"
           }
+        end
+        if @aggregated_record_size > @max_record_size
+          raise Fluent::ConfigError, "aggregated_record_size (#{@aggregated_record_size}) can't be greater than max_record_size (#{@max_record_size})."
         end
       end
 
@@ -45,14 +49,62 @@ module Fluent
 
       def write(chunk)
         delivery_stream_name = extract_placeholders(@delivery_stream_name, chunk)
-        write_records_batch(chunk, delivery_stream_name) do |batch|
-          records = batch.map{|(data)|
-            { data: data }
-          }
-          client.put_record_batch(
-            delivery_stream_name: delivery_stream_name,
-            records: records,
-          )
+        if @aggregated_record_size > 0
+          write_records_batch_aggregated(chunk, delivery_stream_name) do |batch|
+            records = batch.map{|(data)|
+              { data: data }
+            }
+            client.put_record_batch(
+              delivery_stream_name: delivery_stream_name,
+              records: records,
+            )
+          end
+        else
+          write_records_batch(chunk, delivery_stream_name) do |batch|
+            records = batch.map{|(data)|
+              { data: data }
+            }
+            client.put_record_batch(
+              delivery_stream_name: delivery_stream_name,
+              records: records,
+            )
+          end
+        end
+      end
+
+      private
+
+      def write_records_batch_aggregated(chunk, stream_name, &block)
+        unique_id = chunk.dump_unique_id_hex(chunk.unique_id)
+        records = chunk.to_enum(:msgpack_each)
+        aggregated = aggregate_records(records)
+        split_to_batches(aggregated) do |batch, size|
+          log.debug(sprintf "%s: Write chunk %s / %3d records / %4d KB", stream_name, unique_id, batch.size, size/1024)
+          batch_request_with_retry(batch, &block)
+          log.debug(sprintf "%s: Finish writing chunk", stream_name)
+        end
+      end
+
+      def aggregate_records(records)
+        Enumerator.new do |y|
+          current = nil
+          current_size = 0
+          records.each do |record|
+            data = record.first
+            data_size = data.bytesize
+            if current.nil?
+              current = data
+              current_size = data_size
+            elsif current_size + data_size <= @aggregated_record_size
+              current = current + data
+              current_size += data_size
+            else
+              y.yield [current]
+              current = data
+              current_size = data_size
+            end
+          end
+          y.yield [current] unless current.nil?
         end
       end
     end

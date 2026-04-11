@@ -208,6 +208,31 @@ class KinesisFirehoseOutputTest < Test::Unit::TestCase
     assert @server.error_count > 0
   end
 
+  def test_aggregated_record_size
+    d = create_driver(default_config + "data_key a\naggregated_record_size 5120")
+    # Each record is 100 bytes + newline = 101 bytes. 5120 / 101 = 50 records per aggregated record.
+    records = Array.new(100, {"a" => "a" * 100})
+    driver_run(d, records)
+    # 100 records should be aggregated into 2 records (50 each)
+    assert_equal 2, @server.records.size
+    @server.records.each do |record|
+      assert record.bytesize <= 5120
+    end
+  end
+
+  def test_aggregated_record_size_zero_means_no_aggregation
+    d = create_driver(default_config + "data_key a\naggregated_record_size 0")
+    records = Array.new(5, {"a" => "test"})
+    driver_run(d, records)
+    assert_equal 5, @server.records.size
+  end
+
+  def test_aggregated_record_size_exceeds_max_record_size
+    assert_raise(Fluent::ConfigError) do
+      create_driver(default_config + "data_key a\naggregated_record_size 1048577")
+    end
+  end
+
   class PlaceholdersTest < self
     def test_tag_placeholder
       d = create_driver(
