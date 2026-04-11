@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 3.7.0
+
+- Feature - Add `use_fips_endpoint` configuration parameter for FIPS-compliant endpoints : [#227](https://github.com/awslabs/aws-fluent-plugin-kinesis/issues/227)
+- Feature - Add `aggregated_record_size` configuration parameter for `kinesis_firehose` to reduce Firehose 5 KB per-record billing roundup : [#193](https://github.com/awslabs/aws-fluent-plugin-kinesis/issues/193)
+- Bug fix - Fix binary data appearing in error log when compression is enabled : [#231](https://github.com/awslabs/aws-fluent-plugin-kinesis/issues/231)
+- Bug fix - Suppress `ProcessCredentials` insecure string warning from newer aws-sdk-core
+- Enhancement - Add fluent-package v6 LTS and Fluentd 1.19.2 with Ruby 3.4.8 to test cases
+- Enhancement - Fix typos and update links in README
+
 ## 3.6.1
 
 - Dependency - Update gem dependency to Ruby 2.7.1+
