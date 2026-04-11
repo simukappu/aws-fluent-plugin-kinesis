@@ -44,6 +44,21 @@ class KinesisHelperClientTest < Test::Unit::TestCase
     end
   end
 
+  class MockClientFipsEndpoint
+    include Fluent::Plugin::KinesisHelper::Client
+
+    def initialize(use_fips_endpoint: nil)
+      @region = 'us-east-1'
+      @aws_key_id = 'akid'
+      @aws_sec_key = 'secret'
+      @use_fips_endpoint = use_fips_endpoint
+    end
+
+    def request_type
+      :firehose
+    end
+  end
+
   class MockClientProcessCredentials
     include Fluent::Plugin::KinesisHelper::Client
 
@@ -116,6 +131,25 @@ class KinesisHelperClientTest < Test::Unit::TestCase
     assert_raise(Fluent::ConfigError) do
       MockClientProcessCredentials.new.client.config.credentials
     end
+  end
+
+  def test_use_fips_endpoint_enabled
+    omit_if(Gem::Version.new(Aws::CORE_GEM_VERSION) < Gem::Version.new('3.122.0'))
+    client = MockClientFipsEndpoint.new(use_fips_endpoint: true).client
+    assert_equal true, client.config.use_fips_endpoint
+  end
+
+  def test_use_fips_endpoint_disabled
+    omit_if(Gem::Version.new(Aws::CORE_GEM_VERSION) < Gem::Version.new('3.122.0'))
+    client = MockClientFipsEndpoint.new(use_fips_endpoint: false).client
+    assert_equal false, client.config.use_fips_endpoint
+  end
+
+  def test_use_fips_endpoint_default
+    omit_if(Gem::Version.new(Aws::CORE_GEM_VERSION) < Gem::Version.new('3.122.0'))
+    client = MockClientFipsEndpoint.new.client
+    # When nil, SDK uses its default behavior (respects AWS_USE_FIPS_ENDPOINT env var)
+    assert_equal false, client.config.use_fips_endpoint
   end
 
   class WebIdentityCredentialsTest < self

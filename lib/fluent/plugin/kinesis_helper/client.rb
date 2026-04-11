@@ -26,6 +26,7 @@ module Fluent
           config_param :http_proxy,      :string, default: nil, secret: true
           config_param :endpoint,        :string, default: nil
           config_param :ssl_verify_peer, :bool,   default: true
+          config_param :use_fips_endpoint, :bool, default: nil
 
           config_param :aws_key_id,      :string, default: nil, secret: true
           config_param :aws_sec_key,     :string, default: nil, secret: true
@@ -121,6 +122,10 @@ module Fluent
           options.update(http_proxy:      @http_proxy)      unless @http_proxy.nil?
           options.update(endpoint:        @endpoint)        unless @endpoint.nil?
           options.update(ssl_verify_peer: @ssl_verify_peer) unless @ssl_verify_peer.nil?
+          if !@use_fips_endpoint.nil? && client_class.method_defined?(:config) &&
+              Gem::Version.new(Aws::CORE_GEM_VERSION) >= Gem::Version.new('3.122.0')
+            options.update(use_fips_endpoint: @use_fips_endpoint)
+          end
           if @debug
             options.update(logger: Logger.new(log.out))
             options.update(log_level: :debug)

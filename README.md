@@ -535,6 +535,10 @@ HTTP proxy for API calling. Default `nil`.
 
 API endpoint URL, for testing. Default `nil`.
 
+#### use_fips_endpoint
+
+Boolean. Default `nil`. If `true`, the plugin uses FIPS-compliant endpoints for Kinesis Data Streams and Amazon Data Firehose API calls. This is required for environments that must comply with Federal Information Processing Standards (FIPS). When `nil`, the SDK's default behavior applies (which respects the `AWS_USE_FIPS_ENDPOINT` environment variable).
+
 #### ssl_verify_peer
 
 Boolean. Disable if you want to verify ssl connection, for testing. Default `true`.
