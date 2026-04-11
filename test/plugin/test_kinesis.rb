@@ -133,4 +133,13 @@ class KinesisOutputTest < Test::Unit::TestCase
     assert_equal 1, d.instance.log.out.logs.size
     assert_operator d.instance.log.out.logs.first.size, :<, record.to_s.size
   end
+
+  def test_max_record_size_with_compression_logs_hex
+    d = create_driver(default_config + "data_key a\nmax_record_size 1\ncompression zlib")
+    driver_run(d, [{"a"=>"hello"}])
+    assert_equal 1, d.instance.log.out.logs.size
+    log_message = d.instance.log.out.logs.first
+    assert_match(/Record size limit exceeded/, log_message)
+    assert_not_match(/[\x00-\x08\x0e-\x1f]/, log_message)
+  end
 end

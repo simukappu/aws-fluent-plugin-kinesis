@@ -30,14 +30,25 @@ module Fluent
         def initialize(message, record)
           super message
           @record_message = if record.is_a? Array
-                              record.reverse.map(&:to_s).join(', ')
+                              record.reverse.map{|r| format_record(r) }.join(', ')
                             else
-                              record.to_s
+                              format_record(record)
                             end
         end
 
         def to_s
           super + ": " + @record_message
+        end
+
+        private
+
+        def format_record(record)
+          str = record.to_s
+          if str.encoding == Encoding::ASCII_8BIT || !str.valid_encoding?
+            str.unpack1('H*')
+          else
+            str
+          end
         end
       end
       class KeyNotFoundError < SkipRecordError
