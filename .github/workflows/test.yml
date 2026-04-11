@@ -7,6 +7,7 @@ on: [ push, pull_request ]
 # https://docs.fluentd.org/quickstart/support#change-logs
 # https://github.com/fluent/fluentd/blob/master/CHANGELOG.md
 # https://github.com/fluent/fluent-package-builder/blob/master/CHANGELOG.md
+# https://github.com/fluent/fluent-package-builder/blob/master/CHANGELOG-v5.md
 # https://github.com/fluent/fluent-package-builder/blob/master/CHANGELOG-v4.md
 jobs:
   build:
@@ -17,8 +18,8 @@ jobs:
         include:
           - gemfile: gemfiles/Gemfile.fluentd-0.14.22 # Oldest supported Fluentd
             ruby-version: 2.7.1 # Oldest supported Ruby
-          - gemfile: gemfiles/Gemfile.fluentd-1.19.0 # Latest Fluentd / https://rubygems.org/gems/fluentd
-            ruby-version: 3.4.5 # Latest supported Ruby / https://www.ruby-lang.org/en/downloads
+          - gemfile: gemfiles/Gemfile.fluentd-1.19.2 # Latest Fluentd / https://rubygems.org/gems/fluentd
+            ruby-version: 3.4.8 # Latest supported Ruby / https://www.ruby-lang.org/en/downloads
           # - gemfile: gemfiles/Gemfile.td-agent-3.1.0
           #   ruby-version: 2.4.2 # https://github.com/treasure-data/omnibus-td-agent/blob/v3.1.0/config/projects/td-agent3.rb#L20
           # - gemfile: gemfiles/Gemfile.td-agent-3.1.1
@@ -53,22 +54,22 @@ jobs:
             ruby-version: 2.7.1 # https://github.com/fluent/fluent-package-builder/blob/v4.0.1/td-agent/config.rb#L16
           # - gemfile: gemfiles/Gemfile.td-agent-4.1.0
           #   ruby-version: 2.7.2 # https://github.com/fluent/fluent-package-builder/blob/v4.1.0/td-agent/config.rb#L19
-          - gemfile: gemfiles/Gemfile.td-agent-4.1.1
-            ruby-version: 2.7.3 # https://github.com/fluent/fluent-package-builder/blob/v4.1.1/td-agent/config.rb#L17
-          - gemfile: gemfiles/Gemfile.td-agent-4.2.0
-            ruby-version: 2.7.4 # https://github.com/fluent/fluent-package-builder/blob/v4.2.0/td-agent/config.rb#L21
+          # - gemfile: gemfiles/Gemfile.td-agent-4.1.1
+          #   ruby-version: 2.7.3 # https://github.com/fluent/fluent-package-builder/blob/v4.1.1/td-agent/config.rb#L17
+          # - gemfile: gemfiles/Gemfile.td-agent-4.2.0
+          #   ruby-version: 2.7.4 # https://github.com/fluent/fluent-package-builder/blob/v4.2.0/td-agent/config.rb#L21
           # - gemfile: gemfiles/Gemfile.td-agent-4.3.0
           #   ruby-version: 2.7.5 # https://github.com/fluent/fluent-package-builder/blob/v4.3.0/td-agent/config.rb#L21
           # - gemfile: gemfiles/Gemfile.td-agent-4.3.1
           #   ruby-version: 2.7.6 # https://github.com/fluent/fluent-package-builder/blob/v4.3.1/td-agent/config.rb#L19
-          - gemfile: gemfiles/Gemfile.td-agent-4.3.2
-            ruby-version: 2.7.6 # https://github.com/fluent/fluent-package-builder/blob/v4.3.2/td-agent/config.rb#L23
+          # - gemfile: gemfiles/Gemfile.td-agent-4.3.2
+          #   ruby-version: 2.7.6 # https://github.com/fluent/fluent-package-builder/blob/v4.3.2/td-agent/config.rb#L23
           # - gemfile: gemfiles/Gemfile.td-agent-4.4.0
           #   ruby-version: 2.7.6 # https://github.com/fluent/fluent-package-builder/blob/v4.4.0/td-agent/config.rb#L23
           # - gemfile: gemfiles/Gemfile.td-agent-4.4.1
           #   ruby-version: 2.7.6 # https://github.com/fluent/fluent-package-builder/blob/v4.4.1/td-agent/config.rb#L23
-          - gemfile: gemfiles/Gemfile.td-agent-4.4.2
-            ruby-version: 2.7.6 # https://github.com/fluent/fluent-package-builder/blob/v4.4.2/td-agent/config.rb#L23
+          # - gemfile: gemfiles/Gemfile.td-agent-4.4.2
+          #   ruby-version: 2.7.6 # https://github.com/fluent/fluent-package-builder/blob/v4.4.2/td-agent/config.rb#L23
           # - gemfile: gemfiles/Gemfile.td-agent-4.5.0
           #   ruby-version: 2.7.8 # https://github.com/fluent/fluent-package-builder/blob/v4.5.0/td-agent/config.rb#L19
           # - gemfile: gemfiles/Gemfile.td-agent-4.5.1
@@ -83,10 +84,20 @@ jobs:
           #   ruby-version: 3.2.2 # https://github.com/fluent/fluent-package-builder/blob/v5.0.1/fluent-package/config.rb#L26
           # - gemfile: gemfiles/Gemfile.fluent-package-5.0.2
           #   ruby-version: 3.2.2 # https://github.com/fluent/fluent-package-builder/blob/v5.0.2/fluent-package/config.rb#L26
-          - gemfile: gemfiles/Gemfile.fluent-package-5.0.7 # fluent-package LTS
-            ruby-version: 3.2.8 # https://github.com/fluent/fluent-package-builder/blob/v5.0.7/fluent-package/config.rb#L26
-          - gemfile: gemfiles/Gemfile.fluent-package-5.2.0
-            ruby-version: 3.2.6 # https://github.com/fluent/fluent-package-builder/blob/v5.2.0/fluent-package/config.rb#L26
+          # - gemfile: gemfiles/Gemfile.fluent-package-5.0.7
+          #   ruby-version: 3.2.8 # https://github.com/fluent/fluent-package-builder/blob/v5.0.7/fluent-package/config.rb#L26
+          # - gemfile: gemfiles/Gemfile.fluent-package-5.0.8
+          #   ruby-version: 3.2.9 # https://github.com/fluent/fluent-package-builder/blob/v5.0.8/fluent-package/config.rb#L26
+          - gemfile: gemfiles/Gemfile.fluent-package-5.0.9 # Latest release of fluent-package v5
+            ruby-version: 3.2.9 # https://github.com/fluent/fluent-package-builder/blob/v5.0.9/fluent-package/config.rb#L26
+          # - gemfile: gemfiles/Gemfile.fluent-package-5.2.0
+          #   ruby-version: 3.2.6 # https://github.com/fluent/fluent-package-builder/blob/v5.2.0/fluent-package/config.rb#L26
+          # - gemfile: gemfiles/Gemfile.fluent-package-6.0.0
+          #   ruby-version: 3.4.5 # https://github.com/fluent/fluent-package-builder/blob/v6.0.0/fluent-package/config.rb#L26
+          # - gemfile: gemfiles/Gemfile.fluent-package-6.0.1
+          #   ruby-version: 3.4.7 # https://github.com/fluent/fluent-package-builder/blob/v6.0.1/fluent-package/config.rb#L26
+          - gemfile: gemfiles/Gemfile.fluent-package-6.0.2 # fluent-package v6 LTS
+            ruby-version: 3.4.8 # https://github.com/fluent/fluent-package-builder/blob/v6.0.2/fluent-package/config.rb#L26
 
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}
