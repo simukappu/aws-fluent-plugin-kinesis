@@ -3,6 +3,7 @@
 ## 3.7.1
 
 - Enhancement - Add fluent-package 6.0.5 and 6.1.0, and Fluentd 1.20.1 with Ruby 3.4 to test cases
+- Enhancement - Add integration tests with AWS Emulator
 
 ## 3.7.0
 

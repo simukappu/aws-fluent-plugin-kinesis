@@ -565,6 +565,15 @@ To launch using specified version of Fluentd, use `BUNDLE_GEMFILE` environment v
 
     BUNDLE_GEMFILE=$PWD/gemfiles/Gemfile.fluent-package-5.0.9 bundle exec fluentd -c /path/to/fluent.conf
 
+To run tests, use `bundle exec rake test`. Integration tests in `test/integration` run only with `AWS_EMULATOR=true` against [AWS Emulator](https://aws.amazon.com/products/developer-tools/emulator/). Start the emulator and point the AWS SDK to it (see the `aws-emulator` job in [.github/workflows/test.yml](.github/workflows/test.yml)):
+
+    export AWS_ENDPOINT_URL=https://127.0.0.1:9297
+    export AWS_SHARED_CREDENTIALS_FILE=$HOME/.aws/emulator/9297/emulator_credentials
+    export AWS_CONFIG_FILE=$HOME/.aws/emulator/9297/config
+    export AWS_CA_BUNDLE=$HOME/.aws/emulator/9297/ca.pem
+    export AWS_REGION=us-east-1
+    AWS_EMULATOR=true bundle exec rake test
+
 ## Contributing
 
 Bug reports and pull requests are welcome on [GitHub][github].

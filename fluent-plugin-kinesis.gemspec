@@ -68,4 +68,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "mocha", ">= 1.1.0"
   spec.add_development_dependency "webmock", ">= 1.24.2"
   spec.add_development_dependency "fakefs", ">= 0.8.1"
+  # Used by integration tests with AWS Emulator to set up and verify Firehose delivery to S3
+  spec.add_development_dependency "aws-sdk-iam", "~> 1"
+  spec.add_development_dependency "aws-sdk-s3", "~> 1"
 end
