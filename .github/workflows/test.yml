@@ -24,7 +24,7 @@ jobs:
         include:
           - gemfile: gemfiles/Gemfile.fluentd-0.14.22 # Oldest supported Fluentd
             ruby-version: '2.7' # Oldest supported Ruby
-          - gemfile: gemfiles/Gemfile.fluentd-1.19.2 # Latest Fluentd / https://rubygems.org/gems/fluentd
+          - gemfile: gemfiles/Gemfile.fluentd-1.20.1 # Latest Fluentd / https://rubygems.org/gems/fluentd
             ruby-version: '3.4' # Latest supported Ruby / https://www.ruby-lang.org/en/downloads
           # - gemfile: gemfiles/Gemfile.td-agent-3.1.0
           #   ruby-version: 2.4.2 # https://github.com/treasure-data/omnibus-td-agent/blob/v3.1.0/config/projects/td-agent3.rb#L20
@@ -102,8 +102,16 @@ jobs:
           #   ruby-version: 3.4.5 # https://github.com/fluent/fluent-package-builder/blob/v6.0.0/fluent-package/config.rb#L26
           # - gemfile: gemfiles/Gemfile.fluent-package-6.0.1
           #   ruby-version: 3.4.7 # https://github.com/fluent/fluent-package-builder/blob/v6.0.1/fluent-package/config.rb#L26
-          - gemfile: gemfiles/Gemfile.fluent-package-6.0.2 # fluent-package v6 LTS
-            ruby-version: '3.4' # https://github.com/fluent/fluent-package-builder/blob/v6.0.2/fluent-package/config.rb#L26
+          # - gemfile: gemfiles/Gemfile.fluent-package-6.0.2
+          #   ruby-version: 3.4.8 # https://github.com/fluent/fluent-package-builder/blob/v6.0.2/fluent-package/config.rb#L26
+          # - gemfile: gemfiles/Gemfile.fluent-package-6.0.3
+          #   ruby-version: 3.4.9 # https://github.com/fluent/fluent-package-builder/blob/v6.0.3/fluent-package/config.rb#L26
+          # - gemfile: gemfiles/Gemfile.fluent-package-6.0.4
+          #   ruby-version: 3.4.9 # https://github.com/fluent/fluent-package-builder/blob/v6.0.4/fluent-package/config.rb#L26
+          - gemfile: gemfiles/Gemfile.fluent-package-6.0.5 # Latest release of fluent-package v6 LTS
+            ruby-version: '3.4' # https://github.com/fluent/fluent-package-builder/blob/v6.0.5/fluent-package/config.rb#L26
+          - gemfile: gemfiles/Gemfile.fluent-package-6.1.0 # Latest release of fluent-package
+            ruby-version: '3.4' # https://github.com/fluent/fluent-package-builder/blob/v6.1.0/fluent-package/config.rb#L29
 
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}

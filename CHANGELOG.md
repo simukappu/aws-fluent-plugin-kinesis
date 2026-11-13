@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.7.1
+
+- Enhancement - Add fluent-package 6.0.5 and 6.1.0, and Fluentd 1.20.1 with Ruby 3.4 to test cases
+
 ## 3.7.0
 
 - Feature - Add `use_fips_endpoint` configuration parameter for FIPS-compliant endpoints : [#227](https://github.com/awslabs/aws-fluent-plugin-kinesis/issues/227)
