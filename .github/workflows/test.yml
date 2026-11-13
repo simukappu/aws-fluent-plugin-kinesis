@@ -17,7 +17,8 @@ on:
 # https://github.com/fluent/fluent-package-builder/blob/master/CHANGELOG-v4.md
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # ubuntu-latest moved to 26.04, where setup-ruby does not provide the Ruby versions in the matrix yet
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
