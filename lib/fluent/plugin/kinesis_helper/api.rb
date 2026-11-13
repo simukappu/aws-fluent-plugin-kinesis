@@ -14,7 +14,6 @@
 
 require 'fluent_plugin_kinesis/version'
 require 'fluent/configurable'
-require 'benchmark'
 
 module Fluent
   module Plugin
@@ -114,7 +113,9 @@ module Fluent
           # TODO: find out who is causing the sleep to be too short and try to make them stop it instead
           def reliable_sleep(wait_second)
             loop do
-              actual = Benchmark.realtime { sleep(wait_second) }
+              started_at = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+              sleep(wait_second)
+              actual = Process.clock_gettime(Process::CLOCK_MONOTONIC) - started_at
               break if actual >= wait_second
               log.error("#{Thread.current.object_id} sleep failed expected #{wait_second} but slept #{actual}")
               wait_second -= actual

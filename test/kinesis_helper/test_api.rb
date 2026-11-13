@@ -14,7 +14,6 @@
 
 require_relative '../helper'
 require 'fluent/plugin/kinesis_helper/api'
-require 'benchmark'
 
 class KinesisHelperAPITest < Test::Unit::TestCase
   class Mock
@@ -120,12 +119,12 @@ class KinesisHelperAPITest < Test::Unit::TestCase
   end
 
   def test_reliable_sleep
-    time = Benchmark.realtime do
-      t = Thread.new { @object.send(:reliable_sleep, 0.2) }
-      sleep 0.1
-      t.run
-      t.join
-    end
+    started_at = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    t = Thread.new { @object.send(:reliable_sleep, 0.2) }
+    sleep 0.1
+    t.run
+    t.join
+    time = Process.clock_gettime(Process::CLOCK_MONOTONIC) - started_at
     assert_operator time, :>, 0.15
   end
 

@@ -25,7 +25,7 @@ jobs:
           - gemfile: gemfiles/Gemfile.fluentd-0.14.22 # Oldest supported Fluentd
             ruby-version: '2.7' # Oldest supported Ruby
           - gemfile: gemfiles/Gemfile.fluentd-1.20.1 # Latest Fluentd / https://rubygems.org/gems/fluentd
-            ruby-version: '3.4' # Latest supported Ruby / https://www.ruby-lang.org/en/downloads
+            ruby-version: '4.0' # Latest supported Ruby / https://www.ruby-lang.org/en/downloads
           # - gemfile: gemfiles/Gemfile.td-agent-3.1.0
           #   ruby-version: 2.4.2 # https://github.com/treasure-data/omnibus-td-agent/blob/v3.1.0/config/projects/td-agent3.rb#L20
           # - gemfile: gemfiles/Gemfile.td-agent-3.1.1
@@ -168,7 +168,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@b3aaceaef7e0ee231b499e7b5f49c03fc1d32199 # v1.338.0
         with:
-          ruby-version: '3.4' # Latest supported Ruby
+          ruby-version: '4.0' # Latest supported Ruby
           bundler-cache: true
       - name: Run tests including integration tests with AWS Emulator
         run: bundle exec rake test
