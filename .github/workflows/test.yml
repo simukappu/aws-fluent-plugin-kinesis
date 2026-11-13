@@ -1,6 +1,12 @@
 name: test
 
-on: [ push, pull_request ]
+on:
+  push:
+  pull_request:
+  # Run weekly to detect breakage by new releases of dependencies such as Fluentd and AWS SDK
+  schedule:
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
 
 # Test with supported fluent-package versions
 # https://www.fluentd.org/download/fluent_package
